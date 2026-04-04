@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Travel Planner</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <!-- AUTH PAGE -->
+    <section id="auth-page" class="auth-page">
+      <div class="auth-card">
+        <div class="auth-brand">
+          <div class="brand-left">
+            <span class="logo">🧭</span>
+            <span class="brand-name">TripTok Planner</span>
+          </div>
+          <div class="brand-sub">notion-ish travel planning • tropical brain</div>
+        </div>
+
+        <h1>Welcome back</h1>
+        <p class="muted">Try demo: <b>test@example.com</b> + <b>password</b></p>
+
+        <div class="grid2">
+          <label>Email<input id="email" type="email" placeholder="you@cool.com" /></label>
+          <label>Password<input id="password" type="password" placeholder="••••" /></label>
+        </div>
+
+        <div class="actions">
+          <button id="login-btn" class="btn">Login</button>
+          <button id="register-btn" class="btn glow">Register</button>
+        </div>
+
+        <div id="auth-error" class="error" style="display:none;"></div>
+      </div>
+    </section>
+
+    <!-- APP SHELL -->
+    <section id="app-shell" class="shell" style="display:none;">
+      <div class="top-strip">
+        <div class="strip-left">
+          <span class="logo">🧭</span>
+          <span class="brand-name">TripTok Planner</span>
+        </div>
+        <div class="strip-right">
+          <div id="me-pill" class="pill"></div>
+          <div class="profile">
+            <button id="profile-btn" class="btn ghost">Profile</button>
+            <div id="profile-menu" class="menu" style="display:none;">
+              <button id="logout-btn" class="menu-item">Logout</button>
+              <button id="change-pass-btn" class="menu-item disabled" title="later">Change password (later)</button>
+              <button id="delete-acc-btn" class="menu-item danger disabled" title="later">Delete account (later)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <header class="navbar">
+        <nav class="tabs">
+          <button class="tab on" data-tab="home">Home</button>
+          <button class="tab" data-tab="trips">My Trips</button>
+          <button class="tab" data-tab="about">About Us</button>
+        </nav>
+      </header>
+
+      <main class="page">
+        <!-- HOME TAB -->
+        <section id="tab-home" class="tabpage">
+          <section class="hero">
+            <div class="hero-card">
+              <h2>Plan a trip</h2>
+              <p class="muted">Answer a short questionnaire and we’ll generate a day-wise plan + rough budget.</p>
+              <button id="open-planner" class="btn big primary">Plan a trip</button>
+            </div>
+            <div class="hero-card">
+              <h2>Let chatbot help you</h2>
+              <p class="muted">Not sure what you want? Say it casually. The bot (later) will convert it into inputs.</p>
+              <button id="open-bot" class="btn big secondary">Open chatbot</button>
+            </div>
+          </section>
+
+          <section class="dest-grid-wrap">
+            <div class="section-head">
+              <h3>Popular right now</h3>
+              <div class="muted">tiny cinematic cards with big feelings</div>
+            </div>
+            <div id="dest-grid" class="dest-grid"></div>
+          </section>
+        </section>
+
+        <!-- MY TRIPS TAB -->
+        <section id="tab-trips" class="tabpage" style="display:none;">
+          <div class="section-head">
+            <h3>My saved trips</h3>
+            <div class="muted">cards only show plans you saved</div>
+          </div>
+          <div id="mytrips-grid" class="trip-grid"></div>
+        </section>
+
+        <!-- ABOUT TAB -->
+        <section id="tab-about" class="tabpage" style="display:none;">
+          <div class="about card">
+            <h3>About us</h3>
+            <p class="muted">This is a travel planning project built by a student group. It generates itineraries using a scoring + zone + day-builder pipeline, and shows a rough budget to help users avoid overpricing.</p>
+            <div class="about-box">
+              <div><b>Credits</b></div>
+              <div class="muted">Add your group names here (I’ll wire it into the UI cleanly once you paste them).</div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <div id="chat-modal" class="modal" style="display:none;">
+        <div class="modal-backdrop" data-close="chat"></div>
+        <div class="modal-card chat-card">
+          <div class="modal-head">
+            <div>
+              <div class="modal-title">Chatbot</div>
+              <div class="muted">UI only for now</div>
+            </div>
+            <button class="btn ghost" data-close="chat">Close</button>
+          </div>
+          <div id="chat-log" class="chat-log"></div>
+          <div class="chat-input">
+            <input id="chat-text" type="text" placeholder="Try: I want beaches + chill..." />
+            <button id="chat-send" class="btn">Send</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLANNER MODAL -->
+      <div id="planner-modal" class="modal" style="display:none;">
+        <div class="modal-backdrop" data-close="planner"></div>
+        <div class="modal-card planner-card">
+          <div class="modal-head">
+            <div>
+              <div class="modal-title">Quick questionnaire</div>
+              <div class="muted">answer casually — we’re not grading you</div>
+            </div>
+            <button class="btn ghost" data-close="planner">Close</button>
+          </div>
+
+          <div class="form">
+            <div class="grid2">
+              <label>Destination<select id="destination"></select></label>
+              <label>Origin city<input id="origin_city" value="Pune" /></label>
+            </div>
+            <div class="grid2">
+              <label>Start date<input id="start_date" type="date" /></label>
+              <label>End date<input id="end_date" type="date" /></label>
+            </div>
+            <div class="grid2">
+              <label>People<input id="num_people" type="number" min="1" value="2" /></label>
+              <label>Meals/day<input id="meals_per_day" type="number" min="1" max="6" value="3" /></label>
+            </div>
+            <div class="grid2">
+              <label>Wake time<input id="wake_time" type="time" value="06:30" /></label>
+              <label>Sleep time<input id="sleep_time" type="time" value="22:30" /></label>
+            </div>
+            <div class="grid2">
+              <label>Travel mode
+                <select id="travel_mode">
+                  <option value="car">car</option>
+                  <option value="train">train</option>
+                  <option value="flight">flight</option>
+                </select>
+              </label>
+              <label>Accommodation
+                <select id="accommodation_type">
+                  <option value="budget">budget</option>
+                  <option value="3-star">3-star</option>
+                  <option value="4-star" selected>4-star</option>
+                  <option value="5-star">5-star</option>
+                </select>
+              </label>
+            </div>
+            <label>Flexibility
+              <select id="flexibility">
+                <option value="strict">strict</option>
+                <option value="moderate" selected>moderate</option>
+                <option value="flexible">flexible</option>
+              </select>
+            </label>
+            <label>Vibes (max 4)
+              <div id="vibes-wrap" class="chips"></div>
+            </label>
+
+            <div class="divider"></div>
+
+            <div class="muted" style="margin-bottom:8px;">Travel options (static)</div>
+            <div class="grid2">
+              <label>Arrival terminal
+                <select id="arrival_terminal_id"></select>
+              </label>
+              <label>Departure terminal
+                <select id="departure_terminal_id"></select>
+              </label>
+            </div>
+
+            <div class="actions">
+              <button id="plan-btn" class="btn glow">Plan it for me</button>
+            </div>
+
+            <div id="planner-error" class="error" style="display:none;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLAN SCREEN -->
+      <div id="plan-screen" class="modal" style="display:none;">
+        <div class="modal-backdrop" data-close="plan"></div>
+        <div class="modal-card plan-card">
+          <div class="modal-head">
+            <div>
+              <div id="plan-title" class="modal-title">Trip</div>
+              <div id="plan-sub" class="muted"></div>
+            </div>
+            <div class="head-actions">
+              <button id="save-plan" class="btn glow">Save my plan</button>
+              <button id="open-days" class="btn">Day-wise plan</button>
+              <button class="btn ghost" data-close="plan">Back</button>
+            </div>
+          </div>
+
+          <div class="plan-body">
+            <div class="plan-left">
+              <div class="card map-card">
+                <div class="section-head">
+                  <h3>Map</h3>
+                  <div class="muted">zones highlighted day-wise</div>
+                </div>
+                <div id="dest-map" class="dest-map"></div>
+                <div id="legend" class="legend"></div>
+              </div>
+            </div>
+            <div class="plan-right">
+              <div class="card budget-card">
+                <h3>Estimated budget</h3>
+                <div id="budget-total" class="bigmoney"></div>
+                <div class="muted">rough estimate (to avoid overpricing)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DAY SCREEN -->
+      <div id="day-screen" class="modal" style="display:none;">
+        <div class="modal-backdrop" data-close="days"></div>
+        <div class="modal-card days-card">
+          <div class="modal-head">
+            <div>
+              <div class="modal-title">Day-wise plan</div>
+              <div class="muted">scroll each day • timeline style</div>
+            </div>
+            <button class="btn ghost" data-close="days">Back to plan</button>
+          </div>
+          <div id="days" class="days-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
+
