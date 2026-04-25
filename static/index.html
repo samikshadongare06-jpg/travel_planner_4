@@ -3,35 +3,96 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Travel Planner</title>
+    <title>Voyara — plan trips that feel like postcards</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=DM+Sans:wght@400;500;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css" />
   </head>
   <body>
+    <!-- floating background doodles -->
+    <div class="bg-doodles" aria-hidden="true">
+      <svg class="bgd bgd-1" viewBox="0 0 100 100"><path d="M10 70 Q30 30 50 60 T90 50" stroke="#e76f51" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      <svg class="bgd bgd-2" viewBox="0 0 100 100"><circle cx="50" cy="50" r="22" stroke="#2a9d8f" stroke-width="2" fill="none"/><circle cx="50" cy="50" r="10" fill="#f4a261"/></svg>
+      <svg class="bgd bgd-3" viewBox="0 0 100 100"><path d="M20 80 L50 20 L80 80 Z" stroke="#264653" stroke-width="2" fill="none" stroke-linejoin="round"/></svg>
+      <svg class="bgd bgd-4" viewBox="0 0 100 100"><path d="M10 50 Q30 20 50 50 T90 50" stroke="#e9c46a" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+    </div>
+
     <!-- AUTH PAGE -->
     <section id="auth-page" class="auth-page">
-      <div class="auth-card">
-        <div class="auth-brand">
-          <div class="brand-left">
-            <span class="logo">🧭</span>
-            <span class="brand-name">TripTok Planner</span>
+      <div class="auth-wrap">
+        <div class="auth-illu" aria-hidden="true">
+          <svg viewBox="0 0 360 360" class="illu-svg">
+            <defs>
+              <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0" stop-color="#ffd9a8"/>
+                <stop offset="1" stop-color="#ff9e7d"/>
+              </linearGradient>
+            </defs>
+            <circle cx="180" cy="180" r="170" fill="url(#sky)"/>
+            <circle cx="240" cy="120" r="38" fill="#fff5e1" opacity=".9"/>
+            <!-- mountains -->
+            <path d="M20 260 L100 160 L160 230 L220 140 L320 260 Z" fill="#264653"/>
+            <path d="M0 260 L70 200 L130 250 L200 180 L270 260 Z" fill="#2a9d8f" opacity=".85"/>
+            <!-- palm -->
+            <path d="M80 320 Q85 270 95 240" stroke="#3d5a40" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <path d="M95 240 Q60 230 50 250" stroke="#2a9d8f" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M95 240 Q130 230 140 250" stroke="#2a9d8f" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M95 240 Q90 210 110 200" stroke="#2a9d8f" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M95 240 Q105 215 120 215" stroke="#2a9d8f" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <!-- plane -->
+            <g class="float-plane">
+              <path d="M40 90 L130 70 L120 90 L80 95 L70 110 L60 110 L65 95 L40 90 Z" fill="#fff" stroke="#264653" stroke-width="2" stroke-linejoin="round"/>
+            </g>
+            <!-- bird -->
+            <path class="bird" d="M260 80 q10 -8 20 0 q10 -8 20 0" stroke="#264653" stroke-width="3" fill="none" stroke-linecap="round"/>
+          </svg>
+          <div class="illu-tag">made for wanderers <span class="hand">&amp; daydreamers</span></div>
+        </div>
+
+        <div class="auth-card" data-testid="auth-card">
+          <div class="auth-brand">
+            <div class="brand-left">
+              <span class="logo-mark"></span>
+              <span class="brand-name">Voyara</span>
+            </div>
+            <div class="brand-sub">slow travel, big feelings</div>
           </div>
-          <div class="brand-sub">notion-ish travel planning • tropical brain</div>
+
+          <div class="auth-tabs">
+            <button class="auth-tab on" data-mode="login" data-testid="auth-tab-login">Log in</button>
+            <button class="auth-tab" data-mode="register" data-testid="auth-tab-register">Create account</button>
+          </div>
+
+          <h1 id="auth-title">Welcome back, traveller.</h1>
+          <p id="auth-sub" class="muted">Try demo: <b>test@example.com</b> + <b>password</b></p>
+
+          <div class="form-fields">
+            <div class="grid2">
+              <label>Email<input id="email" type="email" placeholder="you@somewhere.cool" data-testid="auth-email-input"/></label>
+              <label>Password<input id="password" type="password" placeholder="••••••••" data-testid="auth-password-input"/></label>
+            </div>
+
+            <div id="register-extras" class="register-extras" style="display:none;">
+              <div class="grid2">
+                <label>Full name<input id="reg-name" type="text" placeholder="Aanya Kapoor" data-testid="reg-name-input"/></label>
+                <label>Username<input id="reg-username" type="text" placeholder="aanya_on_tour" data-testid="reg-username-input"/></label>
+              </div>
+              <div class="grid2">
+                <label>Age<input id="reg-age" type="number" min="10" max="100" placeholder="22" data-testid="reg-age-input"/></label>
+                <label>City of origin<input id="reg-city" type="text" placeholder="Pune" list="city-list" data-testid="reg-city-input"/></label>
+              </div>
+              <datalist id="city-list"></datalist>
+            </div>
+          </div>
+
+          <div class="auth-actions">
+            <button id="primary-auth-btn" class="btn pop primary" data-testid="auth-submit-btn">Log in</button>
+          </div>
+
+          <div id="auth-status" class="auth-status" style="display:none;" data-testid="auth-status"></div>
+          <div id="auth-error" class="error" style="display:none;" data-testid="auth-error"></div>
         </div>
-
-        <h1>Welcome back</h1>
-        <p class="muted">Try demo: <b>test@example.com</b> + <b>password</b></p>
-
-        <div class="grid2">
-          <label>Email<input id="email" type="email" placeholder="you@cool.com" /></label>
-          <label>Password<input id="password" type="password" placeholder="••••" /></label>
-        </div>
-
-        <div class="actions">
-          <button id="login-btn" class="btn">Login</button>
-          <button id="register-btn" class="btn glow">Register</button>
-        </div>
-
-        <div id="auth-error" class="error" style="display:none;"></div>
       </div>
     </section>
 
@@ -39,50 +100,81 @@
     <section id="app-shell" class="shell" style="display:none;">
       <div class="top-strip">
         <div class="strip-left">
-          <span class="logo">🧭</span>
-          <span class="brand-name">TripTok Planner</span>
+          <span class="logo-mark"></span>
+          <span class="brand-name">Voyara</span>
+          <span class="strip-tag">plan it, live it</span>
         </div>
         <div class="strip-right">
-          <div id="me-pill" class="pill"></div>
+          <div id="me-pill" class="pill" data-testid="me-pill"></div>
           <div class="profile">
-            <button id="profile-btn" class="btn ghost">Profile</button>
+            <button id="profile-btn" class="btn ghost" data-testid="profile-btn">Profile</button>
             <div id="profile-menu" class="menu" style="display:none;">
-              <button id="logout-btn" class="menu-item">Logout</button>
-              <button id="change-pass-btn" class="menu-item disabled" title="later">Change password (later)</button>
-              <button id="delete-acc-btn" class="menu-item danger disabled" title="later">Delete account (later)</button>
+              <button id="logout-btn" class="menu-item" data-testid="logout-btn">Log out</button>
+              <button class="menu-item disabled">Change password (later)</button>
+              <button class="menu-item danger disabled">Delete account (later)</button>
             </div>
           </div>
         </div>
       </div>
 
       <header class="navbar">
-        <nav class="tabs">
-          <button class="tab on" data-tab="home">Home</button>
-          <button class="tab" data-tab="trips">My Trips</button>
-          <button class="tab" data-tab="about">About Us</button>
+        <nav class="tabs" role="tablist">
+          <button class="tab on" data-tab="home" data-testid="tab-home">Home</button>
+          <button class="tab" data-tab="trips" data-testid="tab-trips">My Trips</button>
+          <button class="tab" data-tab="about" data-testid="tab-about">About Us</button>
         </nav>
       </header>
 
       <main class="page">
         <!-- HOME TAB -->
         <section id="tab-home" class="tabpage">
-          <section class="hero">
-            <div class="hero-card">
-              <h2>Plan a trip</h2>
-              <p class="muted">Answer a short questionnaire and we’ll generate a day-wise plan + rough budget.</p>
-              <button id="open-planner" class="btn big primary">Plan a trip</button>
+          <section class="hero-band">
+            <div class="hero-text">
+              <div class="kicker"><span class="dot-pulse"></span> live planning, day by day</div>
+              <h1>Pack lightly. <span class="ital">Plan generously.</span></h1>
+              <p class="muted lead">Tell us your vibe — tide, trail, temple, or table — and we'll build you a day-wise itinerary that breathes.</p>
+              <div class="hero-cta">
+                <button id="open-planner" class="btn pop primary big" data-testid="open-planner-btn">
+                  <span>Plan a trip</span>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+                <a class="btn ghost big" href="#popular">browse vibes</a>
+              </div>
+              <div class="hero-meta">
+                <div><b>4</b><span>destinations</span></div>
+                <div><b>10</b><span>vibes</span></div>
+                <div><b>∞</b><span>memories</span></div>
+              </div>
             </div>
-            <div class="hero-card">
-              <h2>Let chatbot help you</h2>
-              <p class="muted">Not sure what you want? Say it casually. The bot (later) will convert it into inputs.</p>
-              <button id="open-bot" class="btn big secondary">Open chatbot</button>
+            <div class="hero-illu" aria-hidden="true">
+              <svg viewBox="0 0 420 360" class="illu-svg">
+                <defs>
+                  <linearGradient id="sun2" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#ffcb91"/><stop offset="1" stop-color="#e76f51"/></linearGradient>
+                </defs>
+                <circle cx="320" cy="100" r="56" fill="url(#sun2)"/>
+                <path d="M0 280 Q120 220 220 260 T420 250 L420 360 L0 360 Z" fill="#2a9d8f" opacity=".9"/>
+                <path d="M0 310 Q140 270 260 300 T420 295 L420 360 L0 360 Z" fill="#264653"/>
+                <!-- dotted route -->
+                <path id="dot-route" d="M40 250 C 110 180, 200 320, 280 200 S 380 180, 400 230" stroke="#fff7e6" stroke-width="3" stroke-dasharray="2 8" fill="none" stroke-linecap="round"/>
+                <circle cx="40" cy="250" r="6" fill="#e76f51"/>
+                <circle cx="280" cy="200" r="6" fill="#f4a261"/>
+                <circle cx="400" cy="230" r="6" fill="#e9c46a"/>
+                <!-- hot air balloon -->
+                <g class="float-balloon">
+                  <ellipse cx="120" cy="100" rx="34" ry="40" fill="#e76f51"/>
+                  <path d="M86 100 Q120 130 154 100" fill="#c44e35"/>
+                  <line x1="100" y1="130" x2="115" y2="155" stroke="#264653" stroke-width="1.5"/>
+                  <line x1="140" y1="130" x2="125" y2="155" stroke="#264653" stroke-width="1.5"/>
+                  <rect x="108" y="155" width="24" height="14" rx="3" fill="#8d5524"/>
+                </g>
+              </svg>
             </div>
           </section>
 
-          <section class="dest-grid-wrap">
+          <section id="popular" class="dest-grid-wrap">
             <div class="section-head">
               <h3>Popular right now</h3>
-              <div class="muted">tiny cinematic cards with big feelings</div>
+              <div class="muted">tap to start planning · <span class="hand">vibes &gt; resumes</span></div>
             </div>
             <div id="dest-grid" class="dest-grid"></div>
           </section>
@@ -92,116 +184,156 @@
         <section id="tab-trips" class="tabpage" style="display:none;">
           <div class="section-head">
             <h3>My saved trips</h3>
-            <div class="muted">cards only show plans you saved</div>
+            <div class="muted">your postcard collection</div>
           </div>
           <div id="mytrips-grid" class="trip-grid"></div>
         </section>
 
         <!-- ABOUT TAB -->
         <section id="tab-about" class="tabpage" style="display:none;">
-          <div class="about card">
-            <h3>About us</h3>
-            <p class="muted">This is a travel planning project built by a student group. It generates itineraries using a scoring + zone + day-builder pipeline, and shows a rough budget to help users avoid overpricing.</p>
-            <div class="about-box">
-              <div><b>Credits</b></div>
-              <div class="muted">Add your group names here (I’ll wire it into the UI cleanly once you paste them).</div>
+          <div class="about-wrap">
+            <div class="about-hero card">
+              <div class="about-hero-left">
+                <div class="kicker"><span class="dot-pulse"></span> hey, hi, hello</div>
+                <h2>We're Voyara — a small student crew obsessed with <span class="ital">good days</span>.</h2>
+                <p class="muted lead">Built for wanderers who hate Excel-style itineraries. We turn vibes into a day-wise plan, throw in a budget so nobody overpays, and quietly judge anyone who skips breakfast.</p>
+              </div>
+              <div class="about-hero-right" aria-hidden="true">
+                <svg viewBox="0 0 240 240" class="illu-svg">
+                  <circle cx="120" cy="120" r="100" fill="#ffe7c9"/>
+                  <path d="M40 160 Q90 110 140 150 T210 130" stroke="#e76f51" stroke-width="4" fill="none" stroke-linecap="round" stroke-dasharray="3 8"/>
+                  <circle cx="40" cy="160" r="7" fill="#264653"/>
+                  <circle cx="210" cy="130" r="7" fill="#264653"/>
+                  <path d="M120 70 l8 22 22 4 -16 14 4 22 -18 -10 -18 10 4 -22 -16 -14 22 -4 z" fill="#f4a261"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="about-grid">
+              <div class="about-tile card">
+                <div class="tile-icon"><svg viewBox="0 0 32 32"><path d="M6 22l8-12 6 9 6-7" stroke="#e76f51" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="22" r="2" fill="#e76f51"/><circle cx="26" cy="12" r="2" fill="#e76f51"/></svg></div>
+                <h4>Why we built this</h4>
+                <p class="muted">Group trips usually die in the planning chat. We made the planner do the boring math so the chat can stay weird.</p>
+              </div>
+              <div class="about-tile card">
+                <div class="tile-icon"><svg viewBox="0 0 32 32"><circle cx="16" cy="14" r="6" stroke="#2a9d8f" stroke-width="3" fill="none"/><path d="M16 20v8M11 26h10" stroke="#2a9d8f" stroke-width="3" stroke-linecap="round"/></svg></div>
+                <h4>How it works</h4>
+                <p class="muted">Score &rarr; cluster into zones &rarr; pack each day with a mix of slow mornings and standout stops. No black-box AI vibes.</p>
+              </div>
+              <div class="about-tile card">
+                <div class="tile-icon"><svg viewBox="0 0 32 32"><path d="M6 14a10 10 0 0 1 20 0v8H6z" stroke="#264653" stroke-width="3" fill="none" stroke-linejoin="round"/><path d="M10 22v4M22 22v4" stroke="#264653" stroke-width="3" stroke-linecap="round"/></svg></div>
+                <h4>Honest budget</h4>
+                <p class="muted">Rough numbers, no inflation. We'd rather under-promise than ruin your last day with maggi-only meals.</p>
+              </div>
+            </div>
+
+            <div class="about-credits card">
+              <div class="kicker">credits, with love</div>
+              <p>Made by a tiny student crew between submissions, chai breaks, and one suspicious laptop fan. Add your names to <span class="hand">app.js → CREDITS</span> and they'll appear right here:</p>
+              <div id="credits-row" class="credits-row"></div>
             </div>
           </div>
         </section>
       </main>
 
-      <div id="chat-modal" class="modal" style="display:none;">
-        <div class="modal-backdrop" data-close="chat"></div>
-        <div class="modal-card chat-card">
-          <div class="modal-head">
-            <div>
-              <div class="modal-title">Chatbot</div>
-              <div class="muted">UI only for now</div>
-            </div>
-            <button class="btn ghost" data-close="chat">Close</button>
-          </div>
-          <div id="chat-log" class="chat-log"></div>
-          <div class="chat-input">
-            <input id="chat-text" type="text" placeholder="Try: I want beaches + chill..." />
-            <button id="chat-send" class="btn">Send</button>
-          </div>
-        </div>
-      </div>
-
       <!-- PLANNER MODAL -->
       <div id="planner-modal" class="modal" style="display:none;">
         <div class="modal-backdrop" data-close="planner"></div>
-        <div class="modal-card planner-card">
+        <div class="modal-card planner-card" data-testid="planner-modal">
           <div class="modal-head">
             <div>
-              <div class="modal-title">Quick questionnaire</div>
-              <div class="muted">answer casually — we’re not grading you</div>
+              <div class="modal-title">A few quick questions</div>
+              <div class="muted">we won't grade you · promise</div>
             </div>
-            <button class="btn ghost" data-close="planner">Close</button>
+            <button class="btn ghost" data-close="planner" data-testid="planner-close-btn">Close</button>
+          </div>
+
+          <!-- multi-step questionnaire -->
+          <div class="stepper">
+            <div class="step on" data-step="1"><span>1</span> Where &amp; when</div>
+            <div class="step" data-step="2"><span>2</span> Crew &amp; rhythm</div>
+            <div class="step" data-step="3"><span>3</span> Vibes &amp; getting there</div>
           </div>
 
           <div class="form">
-            <div class="grid2">
-              <label>Destination<select id="destination"></select></label>
-              <label>Origin city<input id="origin_city" value="Pune" /></label>
-            </div>
-            <div class="grid2">
-              <label>Start date<input id="start_date" type="date" /></label>
-              <label>End date<input id="end_date" type="date" /></label>
-            </div>
-            <div class="grid2">
-              <label>People<input id="num_people" type="number" min="1" value="2" /></label>
-              <label>Meals/day<input id="meals_per_day" type="number" min="1" max="6" value="3" /></label>
-            </div>
-            <div class="grid2">
-              <label>Wake time<input id="wake_time" type="time" value="06:30" /></label>
-              <label>Sleep time<input id="sleep_time" type="time" value="22:30" /></label>
-            </div>
-            <div class="grid2">
-              <label>Travel mode
-                <select id="travel_mode">
-                  <option value="car">car</option>
-                  <option value="train">train</option>
-                  <option value="flight">flight</option>
-                </select>
-              </label>
-              <label>Accommodation
-                <select id="accommodation_type">
-                  <option value="budget">budget</option>
-                  <option value="3-star">3-star</option>
-                  <option value="4-star" selected>4-star</option>
-                  <option value="5-star">5-star</option>
-                </select>
-              </label>
-            </div>
-            <label>Flexibility
-              <select id="flexibility">
-                <option value="strict">strict</option>
-                <option value="moderate" selected>moderate</option>
-                <option value="flexible">flexible</option>
-              </select>
-            </label>
-            <label>Vibes (max 4)
-              <div id="vibes-wrap" class="chips"></div>
-            </label>
-
-            <div class="divider"></div>
-
-            <div class="muted" style="margin-bottom:8px;">Travel options (static)</div>
-            <div class="grid2">
-              <label>Arrival terminal
-                <select id="arrival_terminal_id"></select>
-              </label>
-              <label>Departure terminal
-                <select id="departure_terminal_id"></select>
-              </label>
+            <!-- STEP 1 -->
+            <div class="step-panel on" data-panel="1">
+              <div class="grid2">
+                <label>Destination<select id="destination" data-testid="destination-select"></select></label>
+                <label>Origin city
+                  <select id="origin_city" data-testid="origin-city-select"></select>
+                </label>
+              </div>
+              <div class="grid2">
+                <label>Start date<input id="start_date" type="date" data-testid="start-date-input"/></label>
+                <label>End date<input id="end_date" type="date" data-testid="end-date-input"/></label>
+              </div>
             </div>
 
-            <div class="actions">
-              <button id="plan-btn" class="btn glow">Plan it for me</button>
+            <!-- STEP 2 -->
+            <div class="step-panel" data-panel="2">
+              <div class="grid2">
+                <label>People<input id="num_people" type="number" min="1" value="2" data-testid="num-people-input"/></label>
+                <label>Meals/day<input id="meals_per_day" type="number" min="1" max="6" value="3" data-testid="meals-input"/></label>
+              </div>
+              <div class="grid2">
+                <label>Wake time<input id="wake_time" type="time" value="06:30" data-testid="wake-time-input"/></label>
+                <label>Sleep time<input id="sleep_time" type="time" value="22:30" data-testid="sleep-time-input"/></label>
+              </div>
+              <div class="grid2">
+                <label>Accommodation
+                  <select id="accommodation_type" data-testid="accommodation-select">
+                    <option value="budget">Budget</option>
+                    <option value="3-star">3-star</option>
+                    <option value="4-star" selected>4-star</option>
+                    <option value="5-star">5-star</option>
+                  </select>
+                </label>
+                <label>Flexibility
+                  <select id="flexibility" data-testid="flexibility-select">
+                    <option value="strict">Strict</option>
+                    <option value="moderate" selected>Moderate</option>
+                    <option value="flexible">Flexible</option>
+                  </select>
+                </label>
+              </div>
             </div>
 
-            <div id="planner-error" class="error" style="display:none;"></div>
+            <!-- STEP 3 -->
+            <div class="step-panel" data-panel="3">
+              <label>Vibes <span class="muted">(pick up to 4)</span>
+                <div id="vibes-wrap" class="chips" data-testid="vibes-wrap"></div>
+              </label>
+
+              <div class="divider"></div>
+
+              <div class="grid2">
+                <label>Travel mode
+                  <select id="travel_mode" data-testid="travel-mode-select">
+                    <option value="car">Car (road trip)</option>
+                    <option value="train">Train</option>
+                    <option value="flight">Flight</option>
+                  </select>
+                </label>
+                <label>&nbsp;<div class="muted small">Terminals adapt to your destination &amp; mode below.</div></label>
+              </div>
+
+              <div class="grid2">
+                <label>Arrival terminal<select id="arrival_terminal_id" data-testid="arrival-terminal-select"></select></label>
+                <label>Departure terminal<select id="departure_terminal_id" data-testid="departure-terminal-select"></select></label>
+              </div>
+            </div>
+
+            <div class="step-actions">
+              <button id="prev-step" class="btn ghost" style="visibility:hidden;" data-testid="prev-step-btn">← Back</button>
+              <button id="next-step" class="btn pop secondary" data-testid="next-step-btn">Next →</button>
+              <button id="plan-btn" class="btn pop primary" style="display:none;" data-testid="plan-btn">
+                <span>Plan it for me</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2l3 7 7 .8-5 4.7 1.4 7L12 18l-6.4 3.5L7 14.5 2 9.8l7-.8L12 2z" fill="currentColor"/></svg>
+              </button>
+            </div>
+
+            <div id="planner-error" class="error" style="display:none;" data-testid="planner-error"></div>
           </div>
         </div>
       </div>
@@ -209,16 +341,19 @@
       <!-- PLAN SCREEN -->
       <div id="plan-screen" class="modal" style="display:none;">
         <div class="modal-backdrop" data-close="plan"></div>
-        <div class="modal-card plan-card">
+        <div class="modal-card plan-card" data-testid="plan-screen">
           <div class="modal-head">
             <div>
               <div id="plan-title" class="modal-title">Trip</div>
               <div id="plan-sub" class="muted"></div>
             </div>
             <div class="head-actions">
-              <button id="save-plan" class="btn glow">Save my plan</button>
-              <button id="open-days" class="btn">Day-wise plan</button>
-              <button class="btn ghost" data-close="plan">Back</button>
+              <button id="save-plan" class="btn pop primary" data-testid="save-plan-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 3h11l5 5v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 3v6h7V3M8 14h8v6H8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                <span>Save my plan</span>
+              </button>
+              <button id="open-days" class="btn pop secondary" data-testid="open-days-btn">Day-wise plan</button>
+              <button class="btn ghost" data-close="plan" data-testid="plan-back-btn">Back</button>
             </div>
           </div>
 
@@ -226,18 +361,34 @@
             <div class="plan-left">
               <div class="card map-card">
                 <div class="section-head">
-                  <h3>Map</h3>
-                  <div class="muted">zones highlighted day-wise</div>
+                  <h3>Your route, lit up</h3>
+                  <div class="muted">watch the journey trace itself</div>
                 </div>
                 <div id="dest-map" class="dest-map"></div>
                 <div id="legend" class="legend"></div>
+                <button id="replay-map" class="btn ghost small" data-testid="replay-map-btn">↻ Replay animation</button>
+              </div>
+
+              <!-- transport suggestions -->
+              <div class="card transport-card" id="transport-card">
+                <div class="section-head">
+                  <h3>Getting there</h3>
+                  <div class="muted">dummy suggestions · check live before booking</div>
+                </div>
+                <div id="transport-suggestions" class="transport-suggestions"></div>
               </div>
             </div>
+
             <div class="plan-right">
               <div class="card budget-card">
                 <h3>Estimated budget</h3>
                 <div id="budget-total" class="bigmoney"></div>
-                <div class="muted">rough estimate (to avoid overpricing)</div>
+                <div class="muted">rough estimate · per group, all days</div>
+                <div id="budget-breakdown" class="budget-breakdown"></div>
+              </div>
+              <div class="card quick-card">
+                <h3>Quick glance</h3>
+                <div id="quick-stats" class="quick-stats"></div>
               </div>
             </div>
           </div>
@@ -247,13 +398,13 @@
       <!-- DAY SCREEN -->
       <div id="day-screen" class="modal" style="display:none;">
         <div class="modal-backdrop" data-close="days"></div>
-        <div class="modal-card days-card">
+        <div class="modal-card days-card" data-testid="day-screen">
           <div class="modal-head">
             <div>
               <div class="modal-title">Day-wise plan</div>
-              <div class="muted">scroll each day • timeline style</div>
+              <div class="muted">budget cards live alongside · scroll &amp; vibe</div>
             </div>
-            <button class="btn ghost" data-close="days">Back to plan</button>
+            <button class="btn ghost" data-close="days" data-testid="days-back-btn">Back to plan</button>
           </div>
           <div id="days" class="days-grid"></div>
         </div>
@@ -263,4 +414,3 @@
     <script src="/static/app.js"></script>
   </body>
 </html>
-
