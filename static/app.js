@@ -179,7 +179,7 @@ function renderDestCards() {
       <div class="dest-photo" ${img ? `style="background-image:url('${img}')"` : ""}></div>
       <div class="dest-overlay"></div>
       ${DEST_BADGE[id] ? `<div class="dest-badge">${DEST_BADGE[id]}</div>` : ""}
-      <div class"dest-meta">
+      <div class="dest-meta">
         <div class="dest-name">${d.name}</div>
         <div class="dest-quote">${DEST_QUOTES[id] || "A place you'll remember for a long time."}</div>
       </div>`;

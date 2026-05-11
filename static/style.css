@@ -235,7 +235,7 @@ input:focus, select:focus{ border-color: var(--terracotta); box-shadow: 0 0 0 3p
 .btn.pop:hover{ transform: translateY(-3px) scale(1.02); }
 .btn.pop:active{ transform: translateY(-1px) scale(.99); }
 .btn.pop::after{
-  content:\"\"; position: absolute; inset: 0; border-radius: inherit;
+  content:""; position: absolute; inset: 0; border-radius: inherit;
   background: linear-gradient(180deg, rgba(255,255,255,.25), transparent 40%);
   pointer-events: none;
 }
