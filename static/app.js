@@ -149,10 +149,10 @@ const DEST_BADGE = {
   5: "Backwaters",
 };
 const DEST_IMG = {
-  1: "/static/img/mahabaleshwar.jpg",
-  2: "/static/img/manali.jpg",
-  3: "/static/img/konkan.jpg",
-  5: "/static/img/kerala.jpg",
+  1: "static/img/mahabaleshwar.jpg",
+  2: "static/img/manali.jpg",
+  3: "static/img/konkan.jpg",
+  5: "static/img/kerala.jpg",
 };
 
 function topDestinations() {
